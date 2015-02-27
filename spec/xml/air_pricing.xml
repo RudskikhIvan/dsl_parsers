@@ -1,0 +1,68 @@
+<PriceQuote>
+<MiscInformation>
+ <HeaderInformation>
+  <Text>VALIDATING CARRIER - SU</Text>
+  <Text>EACH CNN REQUIRES ACCOMPANYING SAME CABIN ADT</Text>
+  <Text>VALIDATING CARRIER - SU</Text>
+  <Text>REQUIRES ACCOMPANYING ADT PASSENGER</Text>
+  <Text>EACH INF REQUIRES ACCOMPANYING ADT PASSENGER</Text>
+  <Text>VALIDATING CARRIER - SU</Text>
+  <ValidatingCarrier Code="SU"/>
+ </HeaderInformation>
+</MiscInformation>
+<PricedItinerary CurrencyCode="RUB" TotalAmount="129785">
+ <AirItineraryPricingInfo>
+  <FareCalculation>
+   <Text>MOW SU LON2503.03NUC2503.03END ROE0.767069</Text>
+  </FareCalculation>
+  <ItinTotalFare>
+   <BaseFare Amount="1920.00" CurrencyCode="EUR"/>
+   <EquivFare Amount="78720" CurrencyCode="RUB"/>
+   <Taxes TotalAmount="1915">
+    <Tax Amount="1722" TaxCode="YQF" TaxName="SERVICE FEE - FUEL" TicketingTaxCode="YQ"/>
+    <Tax Amount="152" TaxCode="YRI" TaxName="SERVICE FEE - CARRIER-IMPOSED" TicketingTaxCode="YR"/>
+    <Tax Amount="41" TaxCode="RU" TaxName="SALES TAX" TicketingTaxCode="RU"/>
+   </Taxes>
+   <TotalFare Amount="80635" CurrencyCode="RUB"/>
+  </ItinTotalFare>
+  <PassengerTypeQuantity Code="ADT" Quantity="1"/>
+  <PTC_FareBreakdown>
+   <FareBasis Code="JNOW" FarePassengerType="ADT" FareType="P" FilingCarrier="SU" GlobalInd="EH" Market="MOWLON"/>
+  </PTC_FareBreakdown>
+ </AirItineraryPricingInfo>
+ <AirItineraryPricingInfo>
+  <FareCalculation>
+   <Text>MOW SU LON1251.51NUC1251.51END ROE0.767069</Text>
+  </FareCalculation>
+  <ItinTotalFare>
+   <BaseFare Amount="960.00" CurrencyCode="EUR"/>
+   <EquivFare Amount="39360" CurrencyCode="RUB"/>
+   <Taxes TotalAmount="1915">
+    <Tax Amount="1722" TaxCode="YQF" TaxName="SERVICE FEE - FUEL" TicketingTaxCode="YQ"/>
+    <Tax Amount="152" TaxCode="YRI" TaxName="SERVICE FEE - CARRIER-IMPOSED" TicketingTaxCode="YR"/>
+    <Tax Amount="41" TaxCode="RU" TaxName="SALES TAX" TicketingTaxCode="RU"/>
+   </Taxes>
+   <TotalFare Amount="41275" CurrencyCode="RUB"/>
+  </ItinTotalFare>
+  <PassengerTypeQuantity Code="CNN" Quantity="1"/>
+  <PTC_FareBreakdown>
+   <FareBasis Code="JNOW/CH50" FarePassengerType="CNN" FareType="P" FilingCarrier="SU" GlobalInd="EH" Market="MOWLON" TicketDesignator="CH50"/>
+  </PTC_FareBreakdown>
+ </AirItineraryPricingInfo>
+ <AirItineraryPricingInfo>
+  <FareCalculation>
+   <Text>MOW SU LON250.30NUC250.30END ROE0.767069</Text>
+  </FareCalculation>
+  <ItinTotalFare>
+   <BaseFare Amount="192.00" CurrencyCode="EUR"/>
+   <EquivFare Amount="7875" CurrencyCode="RUB"/>
+   <Taxes TotalAmount="0"/>
+   <TotalFare Amount="7875" CurrencyCode="RUB"/>
+  </ItinTotalFare>
+  <PassengerTypeQuantity Code="INF" Quantity="1"/>
+  <PTC_FareBreakdown>
+   <FareBasis Code="JNOW/IN90" FarePassengerType="INF" FareType="P" FilingCarrier="SU" GlobalInd="EH" Market="MOWLON" TicketDesignator="IN90"/>
+  </PTC_FareBreakdown>
+ </AirItineraryPricingInfo>
+</PricedItinerary>
+</PriceQuote>
