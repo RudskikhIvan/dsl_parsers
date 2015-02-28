@@ -18,13 +18,11 @@ $ bundle
 
 ## Mini documentation
 
-To parse HTML use DslParsers:NokogiriHtmlParser
+To parse HTML use DslParsers::NokogiriHtmlParser
 
-To parse XML using xpath or css selectors use DslParsers:NokogiriXmlParser
+To parse XML using xpath or css selectors use DslParsers::NokogiriXmlParser
 
-To faster parsing XML use DslParsers:OxXmlParser
-
-It has specific selector, more https://github.com/ohler55/ox/blob/master/lib/ox/element.rb
+To faster parsing XML use DslParsers::OxXmlParser. It has specific selector, more https://github.com/ohler55/ox/blob/master/lib/ox/element.rb
 
 For more information You may look rspec tests
 
