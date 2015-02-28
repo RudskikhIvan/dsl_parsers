@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "activesupport"
   s.add_dependency "nokogiri"
+  s.add_dependency "ox"
 
   s.add_development_dependency "pry"
   s.add_development_dependency "pry-doc"
@@ -27,5 +28,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "~> 3.1.0"
   s.add_development_dependency "hirb-unicode"
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "benchmark-ips"
 
 end

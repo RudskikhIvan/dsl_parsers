@@ -32,20 +32,17 @@ module DslParsers
     end
 
     def select_root(xml)
+      return xml if xml.is_a? Nokogiri::XML::NodeSet
       xml = string_to_node(xml) if xml.is_a? String
-      node = xml.is_a?(Nokogiri::XML::Element) ? xml.root : xml
+      node = xml.is_a?(Nokogiri::XML::Document) ? xml.root : xml
+      return [node] unless self.class.root
+
       root_tag = self.class.root
 
-      return [node] unless root_tag
-
-      if node.is_a?(Nokogiri::XML::Element) and (node.name == root_tag)
-        return [node]
-      else
-        nodes = node.send(root_finder, root_tag)
-        nodes = node.send(root_finder, ".//#{root_tag}") if nodes.blank?
-        return nodes
-      end
-
+      nodes = node.send(root_finder, root_tag) #css
+      nodes = node.send(root_finder, "/#{root_tag}") if nodes.blank?
+      nodes = node.send(root_finder, ".//#{root_tag}") if nodes.blank?
+      nodes
     end
 
     class Base

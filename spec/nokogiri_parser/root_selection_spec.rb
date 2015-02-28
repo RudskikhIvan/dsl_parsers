@@ -22,7 +22,7 @@ describe 'Root selection' do
     it 'select correct root tag' do
       root = parser.select_root(@xml)
       expect(root.size).to eq(1)
-      expect(root.first.name).to eq 'document'
+      expect(root.first.name).to eq 'PriceQuote'
 
       TestXmlParser.send(:root_path, 'PriceQuote')
       root = parser.select_root(@xml)
@@ -63,7 +63,7 @@ describe 'Root selection' do
     it 'select correct root tag by css' do
       root = parser.select_root(@html)
       expect(root.size).to eq(1)
-      expect(root.first.name).to eq 'document'
+      expect(root.first.name).to eq 'html'
 
       TestHtmlParser.send(:root_path, 'body')
       root = parser.select_root(@html)

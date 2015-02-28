@@ -11,7 +11,7 @@ module DslParsers
 
     end
 
-    def to_node(xml)
+    def string_to_node(xml)
       Nokogiri::HTML(xml)
     end
 
