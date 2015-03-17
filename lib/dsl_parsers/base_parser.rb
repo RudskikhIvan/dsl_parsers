@@ -13,6 +13,7 @@ module DslParsers
       class_attribute :map, :instance_accessor => false
       class_attribute :root, :instance_accessor => false
       class_attribute :many, :instance_accessor => false
+      self.map = {}
     end
 
     def before_parse(data)
@@ -134,7 +135,8 @@ module DslParsers
       private
 
       def has_one(name, path, type = nil, params = {})
-        self.map ||= {}
+        self.map = self.map.dup unless @map_inited
+        @map_inited = true
         self.map[name] = normalize_arguments(path, type, params)
 
         finder = self.map[name][:finder_method]
