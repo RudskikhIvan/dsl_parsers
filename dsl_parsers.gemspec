@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir['spec/**/*']
 
 
-  s.add_dependency 'activesupport', '~> 4.2.2'
+  s.add_dependency 'activesupport', '>= 4.2.2'
   s.add_dependency 'nokogiri'
   s.add_dependency 'ox', '~> 2.8.1'
 
