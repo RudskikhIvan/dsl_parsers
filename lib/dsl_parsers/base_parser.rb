@@ -21,6 +21,7 @@ module DslParsers
     end
 
     def parse(data)
+      return if data.blank?
       nodes = select_root(before_parse(data))
       res = Array.wrap(recurse_parse(nodes, self.class.map))
       after_parse(self.class.many ? res : res.first)
@@ -60,6 +61,8 @@ module DslParsers
       #convert by type
       if primitive? map
         return params[:many] ? nodes.map{|n| typecast(n, map)} : typecast(nodes.first, map)
+      elsif map.respond_to?(:parse)
+        return params[:many] ? nodes.map{|n| map.parse(n) } : map.parse(nodes.first)
       end
 
       #recursive parse
@@ -117,7 +120,7 @@ module DslParsers
         elsif type == Boolean then ['true', 't', '1'].include?(value.to_s.downcase)
         elsif type == Array then Array.wrap(value)
         elsif type == Integer then value.to_i
-        else
+        elsif type.respond_to
           value
         end
       rescue

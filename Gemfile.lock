@@ -1,35 +1,35 @@
 PATH
   remote: .
   specs:
-    dsl_parsers (0.1)
-      activesupport
+    dsl_parsers (0.1.1)
+      activesupport (~> 4.2.2)
       nokogiri
-      ox
+      ox (~> 2.8.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.0)
+    activesupport (4.2.10)
       i18n (~> 0.7)
-      json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     benchmark-ips (2.1.1)
     coderay (1.1.0)
-    diff-lcs (1.2.5)
+    concurrent-ruby (1.0.5)
+    diff-lcs (1.3)
     hirb (0.7.1)
     hirb-unicode (0.0.5)
       hirb (~> 0.5)
       unicode-display_width (~> 0.1.1)
-    i18n (0.7.0)
-    json (1.8.2)
+    i18n (0.9.1)
+      concurrent-ruby (~> 1.0)
     method_source (0.8.2)
-    mini_portile (0.6.2)
-    minitest (5.5.1)
-    nokogiri (1.6.6.2)
-      mini_portile (~> 0.6.0)
-    ox (2.1.1)
+    mini_portile2 (2.3.0)
+    minitest (5.10.3)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
+    ox (2.8.2)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -39,22 +39,22 @@ GEM
       yard (~> 0.8)
     pry-nav (0.2.4)
       pry (>= 0.9.10, < 0.11.0)
-    rspec (3.1.0)
-      rspec-core (~> 3.1.0)
-      rspec-expectations (~> 3.1.0)
-      rspec-mocks (~> 3.1.0)
-    rspec-core (3.1.7)
-      rspec-support (~> 3.1.0)
-    rspec-expectations (3.1.2)
+    rspec (3.7.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
+    rspec-core (3.7.0)
+      rspec-support (~> 3.7.0)
+    rspec-expectations (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.1.0)
-    rspec-mocks (3.1.3)
-      rspec-support (~> 3.1.0)
-    rspec-support (3.1.2)
+      rspec-support (~> 3.7.0)
+    rspec-mocks (3.7.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.7.0)
+    rspec-support (3.7.0)
     slop (3.6.0)
-    sqlite3 (1.3.10)
-    thread_safe (0.3.4)
-    tzinfo (1.2.2)
+    thread_safe (0.3.6)
+    tzinfo (1.2.4)
       thread_safe (~> 0.1)
     unicode-display_width (0.1.1)
     yard (0.8.7.6)
@@ -69,5 +69,7 @@ DEPENDENCIES
   pry
   pry-doc
   pry-nav
-  rspec (~> 3.1.0)
-  sqlite3
+  rspec (~> 3.7.0)
+
+BUNDLED WITH
+   1.15.4

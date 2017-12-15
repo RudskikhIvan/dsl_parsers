@@ -32,7 +32,8 @@ module DslParsers
     end
 
     def select_root(xml)
-      return xml if xml.is_a? Nokogiri::XML::NodeSet
+      return xml if xml.is_a?(Nokogiri::XML::NodeSet)
+      return [xml] if xml.is_a?(Nokogiri::XML::Element)
       xml = string_to_node(xml) if xml.is_a? String
       node = xml.is_a?(Nokogiri::XML::Document) ? xml.root : xml
       return [node] unless self.class.root

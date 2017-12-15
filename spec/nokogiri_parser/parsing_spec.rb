@@ -10,116 +10,142 @@ end
 
 
 describe 'Parsing' do
-
   describe 'XML' do
+    let(:xml) { File.read(File.join(File.dirname(__FILE__), '../xml/air_pricing.xml')) }
 
-    before do
-      @xml = File.read(File.join(File.dirname(__FILE__), '../xml/air_pricing.xml'))
+    subject { parser.parse(xml) }
+
+    describe 'Nested elements' do
+      let(:parser) do
+        Class.new(TestXmlParser) do
+          root_path 'PricedItinerary'
+
+          has_one :code, '@CurrencyCode'
+          has_one :amount, '@TotalAmount', Integer
+          has_many :prices, 'AirItineraryPricingInfo' do
+            has_one :total, './/TotalFare/@Amount', Integer
+            has_one :total_currency, './/TotalFare/@CurrencyCode'
+            has_one :fare, './/BaseFare/@Amount', Integer
+            has_one :fare_currency, './/BaseFare/@CurrencyCode'
+          end
+        end
+      end
+
+      it 'parses xml with nested structure' do
+        expect(subject).to have_hash_like_that({
+          :code => 'RUB',
+          :amount => 129785,
+          :prices => Array
+        })
+
+        expect(subject[:prices].size).to eq(3)
+
+        expect(subject[:prices]).to all(have_hash_like_that({
+          :total_currency => 'RUB',
+          :fare_currency => 'EUR',
+          :total => Integer,
+          :fare => Integer
+        }))
+      end
     end
 
-    it 'correct parse 1' do
 
-      parser = Class.new(TestXmlParser) do
-        root_path 'PricedItinerary'
+    describe 'Array values' do
+      let(:parser) {
+        Class.new(TestXmlParser) do
+          root_path 'PricedItinerary'
+          has_many :fares, './/TotalFare/@Amount', Integer
+          has_many :taxes, './/Taxes/@TotalAmount', Integer
+          has_many :passengers, './/PassengerTypeQuantity/@Code'
+        end
+      }
 
-        has_one :code, '@CurrencyCode'
-        has_one :amount, '@TotalAmount', Integer
-        has_many :prices, 'AirItineraryPricingInfo' do
+      it 'returns values as array' do
+        expect(subject).to eq({
+          :fares => [80635, 41275, 7875],
+          :taxes => [1915, 1915, 0],
+          :passengers => ['ADT', 'CNN', 'INF']
+        })
+      end
+    end
+
+
+    describe 'Many' do
+      let(:parser) do
+        Class.new(TestXmlParser) do
+          root_path 'AirItineraryPricingInfo'
+          few true
+
           has_one :total, './/TotalFare/@Amount', Integer
           has_one :total_currency, './/TotalFare/@CurrencyCode'
           has_one :fare, './/BaseFare/@Amount', Integer
           has_one :fare_currency, './/BaseFare/@CurrencyCode'
+
         end
       end
 
-      res = parser.parse(@xml)
+      it 'parse many root elements' do
+        expect(subject.size).to eq(3)
 
-      expect(res).to have_hash_like_that({
-        :code => 'RUB',
-        :amount => 129785,
-        :prices => Array
-      })
-
-      expect(res[:prices].size).to eq(3)
-      res[:prices].each do |r|
-        expect(r).to have_hash_like_that({
+        expect(subject).to all(have_hash_like_that({
           :total_currency => 'RUB',
           :fare_currency => 'EUR',
           :total => Integer,
           :fare => Integer
-        })
+        }))
       end
-
     end
 
+    describe 'Parser as type' do
+      context 'has_one' do
+        let(:parser) do
+          sub_parser = Class.new(TestXmlParser) do
+            root_path 'Tax'
+            has_one :amount, '@Amount', Float
+            has_one :code, '@TaxCode'
+          end
 
+          Class.new(TestXmlParser) do
+            root_path 'AirItineraryPricingInfo'
+            has_one :total, './/TotalFare/@Amount', Integer
+            has_one :total_currency, './/TotalFare/@CurrencyCode'
+            has_one :tax, './/Taxes/Tax', sub_parser
+          end
+        end
 
-    it 'correct parse 2' do
-
-      parser = Class.new(TestXmlParser) do
-        root_path 'PricedItinerary'
-        has_many :fares, './/TotalFare/@Amount', Integer
-        has_many :taxes, './/Taxes/@TotalAmount', Integer
-        has_many :passengers, './/PassengerTypeQuantity/@Code'
+        it 'returns value as subparser result' do
+          expect(subject[:tax]).to have_hash_like_that({
+            amount: Float,
+            code: String
+          })
+        end
       end
 
-      res = parser.parse(@xml)
+      context 'has many' do
+        let(:parser) do
+          sub_parser = Class.new(TestXmlParser) do
+            root_path 'Tax'
+            has_one :amount, '@Amount', Float
+            has_one :code, '@TaxCode'
+          end
 
-      expect(res).to eq({
-        :fares => [80635, 41275, 7875],
-        :taxes => [1915, 1915, 0],
-        :passengers => ['ADT', 'CNN', 'INF']
-      })
+          Class.new(TestXmlParser) do
+            root_path 'AirItineraryPricingInfo'
+            has_one :total, './/TotalFare/@Amount', Integer
+            has_one :total_currency, './/TotalFare/@CurrencyCode'
+            has_many :taxes, './/Taxes/Tax', sub_parser
+          end
+        end
 
+        it 'returns value as subparser result' do
+          expect(subject[:taxes].size).to eq(3)
+          expect(subject[:taxes]).to all have_hash_like_that({
+            amount: Float,
+            code: String
+          })
+        end
+      end
     end
-
-    it 'correct parse 3' do
-      parser = Class.new(TestXmlParser) do
-        include DslParsers::NokogiriXmlParser
-        root_path 'ItinTotalFare'
-
-        has_one :fare, 'TotalFare/@Amount', Integer
-        has_one :fare_currency, 'TotalFare/@CurrencyCode'
-        has_one :taxes, 'Taxes/@TotalAmount', Integer
-      end
-
-      res = parser.parse(@xml)
-
-      expect(res).to eq({
-        fare: 80635,
-        fare_currency: 'RUB',
-        taxes: 1915
-      })
-    end
-
-    it 'parse many root elements' do
-
-      parser = Class.new(TestXmlParser) do
-        root_path 'AirItineraryPricingInfo'
-        few true
-
-        has_one :total, './/TotalFare/@Amount', Integer
-        has_one :total_currency, './/TotalFare/@CurrencyCode'
-        has_one :fare, './/BaseFare/@Amount', Integer
-        has_one :fare_currency, './/BaseFare/@CurrencyCode'
-
-      end
-
-      res = parser.parse(@xml)
-
-      expect(res.size).to eq(3)
-
-      res.each do |r|
-        expect(r).to have_hash_like_that({
-          :total_currency => 'RUB',
-          :fare_currency => 'EUR',
-          :total => Integer,
-          :fare => Integer
-        })
-      end
-
-    end
-
   end
 
   describe 'HTML' do
@@ -153,12 +179,11 @@ describe 'Parsing' do
 
       res[:news].each do |n|
         expect(n).to have_hash_like_that({
-           :time => Time,
-           :title => String,
-           :message => String
+          time: Time,
+          title: String,
+          message: String
         })
       end
-
     end
 
     it 'parse my repositories in github' do
