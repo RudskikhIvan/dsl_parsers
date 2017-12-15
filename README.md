@@ -70,3 +70,15 @@ result:
   taxes_currency: 'RUB'
 }
 ```
+
+## Namespaces
+
+Currently namespace are not supported, please, remove them.
+
+For `Ox` you can do this
+
+``` ruby
+Ox::default_options = Ox::default_options.merge(strip_namespace: true)
+```
+
+For `Nokogiri` you can override `select_root(raw_data)` to parse string response as you wish
