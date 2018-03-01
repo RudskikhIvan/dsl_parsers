@@ -4,7 +4,7 @@ module DslParsers
   module BaseParser
     extend ActiveSupport::Concern
 
-    Types = [String, Float, Time, Date, DateTime, Integer, Boolean, Array]
+    Types = [String, Float, Time, Date, DateTime, Integer, Boolean, Array, BigDecimal]
 
     class ConfigurationError < RuntimeError; end
     class ParsingError < RuntimeError; end
@@ -120,6 +120,7 @@ module DslParsers
         elsif type == Boolean then ['true', 't', '1'].include?(value.to_s.downcase)
         elsif type == Array then Array.wrap(value)
         elsif type == Integer then value.to_i
+        elsif type == BigDecimal then value.to_d
         elsif type.respond_to
           value
         end
