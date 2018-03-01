@@ -29,7 +29,14 @@ module DslParsers
     end
 
     def node_to_string(node)
-      return node.text if node.is_a?(Ox::Element)
+      if node.is_a?(Ox::Element)
+        node.nodes.each do |n|
+          case n
+          when String then return n
+          when Ox::CData then return n.value
+          end
+        end
+      end
       node
     end
 
