@@ -30,6 +30,7 @@ module DslParsers
 
     def node_to_string(node)
       if node.is_a?(Ox::Element)
+        return if node.nodes.blank?
         node.nodes.each do |n|
           case n
           when String then return n
