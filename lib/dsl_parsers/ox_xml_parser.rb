@@ -34,7 +34,7 @@ module DslParsers
         node.nodes.each do |n|
           case n
           when String then return n
-          when Ox::CData then return n.value
+          when Ox::CData then return n.value.strip
           end
         end
       end
