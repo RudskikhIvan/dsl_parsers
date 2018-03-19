@@ -70,7 +70,7 @@ module DslParsers
         if params[:many]
           return recurse_parse(nodes, map)
         else
-          return recurse_parse([nodes.first], map).first
+          return recurse_parse(Array(nodes.first), map).first
         end
       end
 
@@ -101,6 +101,7 @@ module DslParsers
       #return node if params[:path].blank?
       finder_method = params[:finder_method]
       return node.to_s.scan(params[:path]) if finder_method == :regexp
+      binding.pry if ENV['DEBUG'] == '1' && node.nil?
       node.send(finder_method, params[:path])
     end
 
