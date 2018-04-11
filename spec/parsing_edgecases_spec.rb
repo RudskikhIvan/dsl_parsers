@@ -8,7 +8,7 @@ describe 'Parsing edge cases' do
     end
 
     [DslParsers::OxXmlParser::Base, DslParsers::NokogiriXmlParser::Base].each do |klass|
-      it "correct parses to nil with #{klass}" do
+      it "detects whole root_path element with #{klass}" do
         parser = Class.new(klass) do
           root_path 'response'
           has_one :status, 'status'
