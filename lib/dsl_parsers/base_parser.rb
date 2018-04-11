@@ -23,7 +23,7 @@ module DslParsers
     def parse(data)
       return if data.blank?
       nodes = select_root(before_parse(data))
-      res = Array.wrap(recurse_parse(nodes, self.class.map))
+      res = Array(recurse_parse(nodes, self.class.map))
       after_parse(self.class.many ? res : res.first)
     end
 
@@ -86,7 +86,7 @@ module DslParsers
 
       # #parse with class, which has parse method
       # if map.respond_to?(:parse)
-      #   res = Array.wrap( params[:map].parse(nodes) )
+      #   res = Array( params[:map].parse(nodes) )
       #   return params[:many] ? res : res.first
       # end
 
@@ -119,7 +119,7 @@ module DslParsers
         elsif type == Date then Date.parse(value.to_s)
         elsif type == DateTime then DateTime.parse(value.to_s)
         elsif type == Boolean then ['true', 't', '1'].include?(value.to_s.downcase)
-        elsif type == Array then Array.wrap(value)
+        elsif type == Array then Array(value)
         elsif type == Integer then value.to_i
         elsif type == BigDecimal then value.to_d
         elsif type.respond_to

@@ -2,6 +2,8 @@
 
 Ruby DslParsers allows to build XML parsers in DSL style
 
+[![Build Status][BS img]][Build Status]
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -82,3 +84,6 @@ Ox::default_options = Ox::default_options.merge(strip_namespace: true)
 ```
 
 For `Nokogiri` you can override `select_root(raw_data)` to parse string response as you wish
+
+[Build Status]: https://travis-ci.org/shredder-rull/dsl_parsers
+[BS img]: https://travis-ci.org/shredder-rull/dsl_parsers.png
