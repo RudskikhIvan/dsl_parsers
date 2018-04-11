@@ -47,6 +47,7 @@ module DslParsers
       root_tag = self.class.root
 
       return [node] unless root_tag
+      return [node] if node.value == root_tag
 
       nodes = node.locate(root_tag)
       nodes = node.locate("/#{root_tag}") if nodes.blank?
